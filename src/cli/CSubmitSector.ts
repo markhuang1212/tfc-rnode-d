@@ -19,9 +19,6 @@ class CSubmitSector {
         if (stdout.match(/_r=true/)) {
             return true;
         }
-        if (stdout.match(/_r=false/)) {
-            return false;
-        }
         throw Error('Unexpected CLI behavior')
     }
 }

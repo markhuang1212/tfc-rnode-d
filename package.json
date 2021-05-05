@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "main": "src/main.ts",
+  "scripts": {
+    "test": "jest"
+  },
   "license": "MIT",
   "dependencies": {
     "@tfc-chain/adapter": "^1.0.2",

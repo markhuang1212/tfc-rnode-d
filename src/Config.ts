@@ -2,7 +2,7 @@ class Config {
 
     static shared = new Config()
 
-    afs_path = '/aos/ks/afs_bin/afs-x86_64b'
+    afs_path = '/tos/bin/tfs-x86_64b'
 
     chain_endpoint = 'http://localhost:8545'
     chain_tfc_addr = ''
