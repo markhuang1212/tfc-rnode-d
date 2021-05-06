@@ -1,5 +1,6 @@
 import { Verifier } from "@tfc-chain/adapter";
 import VerifierShared from "../chain/VerifierShared";
+import CVerifyProof from "../cli/CVerifyProof";
 import ITask from "./ITask";
 
 class IVerifyProof extends ITask {
@@ -14,9 +15,12 @@ class IVerifyProof extends ITask {
     }
 
     async initialize() {
-        // this.verifier.onSectorProofSubmitted((sector_afid, seed, proof) => {
-
-        // }, 0)
+        this.verifier.onSectorProofSubmitted(async (sector_afid, seed, proof) => {
+            const proof_afid = proof.toString('hex')
+            const check_afid = seed.toString('hex')
+            const ret = await CVerifyProof.shared.verifyProof(proof_afid, check_afid, sector_afid.toString('hex'))
+            this.verifier.verifyProof(proof.toString(), ret)
+        })
     }
 
 }
