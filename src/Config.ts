@@ -11,10 +11,6 @@ class Config {
     verifier_prikey = ''
     seed_submitter_privkey = ''
 
-    features = {
-        
-    }
-
 }
 
 export default Config

@@ -2,26 +2,29 @@ import { RNode } from "@tfc-chain/adapter";
 import RNodeShared from "../chain/RNodeShared";
 import CGenerateProof from '../cli/CGenerateProof';
 import ITask from "./ITask";
+import fs from 'fs'
+import path from 'path'
 
 class ISubmitProof extends ITask {
 
     static shared = new ISubmitProof(RNodeShared)
 
-    sectors: Buffer[]
+    sectors: Set<string>
     rnode: RNode
 
     constructor(rnode: RNode) {
         super()
         this.rnode = rnode
-        this.sectors = []
+        this.sectors = new Set(JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/sectors.json'), 'utf-8')) as string[])
     }
 
     async initialize() {
-        this.sectors.forEach(sector => {
-            this.rnode.onSectorVerificationTask((afid, seed)=>{
-                CGenerateProof.shared.generateProof(afid.toString('hex'), seed.toString('hex'))
-            }, sector)
-        })
+        this.rnode.onSectorVerificationTask(async (afid, seed, verification) => {
+            if (this.sectors.has(afid.toString())) {
+                const proof = await CGenerateProof.shared.generateProof(afid.toString('hex'), seed.toString('hex'))
+                this.rnode.submitProof(verification, Buffer.from(proof.proof_afid, 'hex'))
+            }
+        }, null)
     }
 
 }
