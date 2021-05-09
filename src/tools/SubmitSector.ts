@@ -2,6 +2,8 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 import RNodeShared from '../chain/RNodeShared'
 import CSubmitSector from '../cli/CSubmitSector'
+import fs from 'fs'
+import path from 'path'
 
 const argv = yargs(hideBin(process.argv))
     .option('afid', {
@@ -27,6 +29,12 @@ async function execute() {
     } catch (e) {
         console.error('Failed to submit sector to TFC-Chain')
     }
+
+    const sectors =
+        JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/sectors.json'), 'utf-8')) as string[]
+    sectors.push(argv.afid as string)
+    fs.writeFileSync(path.join(__dirname, '../../data/sectors.json'), JSON.stringify(sectors, undefined, 4))
+
 
     console.log('Success!')
 }
