@@ -15,13 +15,14 @@ class CVerifyProof {
     }
 
     async verifyProof(proof_afid: string, check_afid: string, sector_afid: string) {
-        const { stdout } = await exec(`${this.afs_path} ";_f=verify_proof;proof_afid=${proof_afid};check_afid=${check_afid};sector_afid=${sector_afid}";`)
+        const { stdout } = await exec(`${this.afs_path} ";_f=verify_proof;proof_afid=${proof_afid};check_afid=${check_afid};sector_afid=${sector_afid};"`)
+        // console.log(stdout)
         if (stdout.match(/_r=true/)) {
             return true
         }
         return false
     }
- 
+
 }
 
 export default CVerifyProof
