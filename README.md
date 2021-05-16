@@ -5,8 +5,8 @@
 ## 功能
 
 1. 提供“提交sector信息到TFC-Chain和集群”的功能
-2. （普通Rnode）监听链上的验证请求，在自己的sector需要被验证时，（sector和seed的afid）及时提交验证结果（proof）
-3. （超级节点）监听链上的验证请求，在Tfc-Chain需要时验证其他RNode提交的proof
+2. （普通Rnode）监听链上的验证请求，在自己的sector需要被验证时，及时提交验证结果（proof）
+3. （超级节点）监听链上的验证请求，在Tfc-Chain需要时帮助tfc-chain验证其他RNode提交的proof
 
 ## 配置
 
@@ -27,7 +27,7 @@
 function uploadSector(afid: string, owner: string, private_key: string): void
 ```
 
-使用命令行调用该工具：
+使用命令行调用该函数：
 
 ```bash
 yarn run submit-sector --afid="xxxxx" --location="xxxxx"
@@ -35,7 +35,7 @@ yarn run submit-sector --afid="xxxxx" --location="xxxxx"
 
 ### 自动提交sector的proof
 
-需要在`data/sectors.json`中填入改监听的sector afid。程序会在需要提交验证时自动上传验证结果。
+需要在`data/sectors.json`中填入改监听的sector afid，随后重启程序。程序会在需要提交验证时自动上传验证结果。
 
 ### 自动验证（链上所有）sector的proof
 
@@ -43,7 +43,7 @@ yarn run submit-sector --afid="xxxxx" --location="xxxxx"
 
 ## 程序运行需要的API
 
-1. TfcChain中的`RNode Role`和`Verifier Role`
+1. TfcChain中的`RNode Role`和`Verifier Role`。程序使用`@tfc-chain/adapter`与tfc-chain沟通
 2. 向集群提交sector的函数`;_f=submit_sector;sector_afid=xxx;location=xxx;`
 3. 生成sector验证结果（proof）的函数`;_f=generate_proof;sector_afid=xxx;check_afid=xxx;`
 4. 验证其他RNode提交的proof的函数`;_f=verify_proof;proof_afid=xxx;check_afid=xxx;sector_afid=xxx;`

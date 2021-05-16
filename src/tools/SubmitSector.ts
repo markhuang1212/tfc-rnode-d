@@ -22,12 +22,14 @@ async function execute() {
         await CSubmitSector.shared.submitSector(argv.afid as string, argv.location as string)
     } catch (e) {
         console.error('Failed to submit sector to the cluster')
+        console.error(e.stack)
     }
 
     try {
         await RNodeShared.submitSector(Buffer.from(argv.afid as string, 'hex'))
     } catch (e) {
         console.error('Failed to submit sector to TFC-Chain')
+        console.error(e.stack)
     }
 
     const sectors =
@@ -36,7 +38,7 @@ async function execute() {
     fs.writeFileSync(path.join(__dirname, '../../data/sectors.json'), JSON.stringify(sectors, undefined, 4))
 
 
-    console.log('Success!')
+    console.log('Program Finish')
 }
 
 execute()

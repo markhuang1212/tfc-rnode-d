@@ -15,11 +15,11 @@ class IVerifyProof extends ITask {
     }
 
     async initialize() {
-        this.verifier.onSectorProofSubmitted(async (sector_afid, seed, proof) => {
+        this.verifier.onSectorProofSubmitted(async (sector_afid, seed, proof, verification) => {
             const proof_afid = proof.toString('hex')
             const check_afid = seed.toString('hex')
             const ret = await CVerifyProof.shared.verifyProof(proof_afid, check_afid, sector_afid.toString('hex'))
-            this.verifier.verifyProof(proof.toString(), ret)
+            this.verifier.verifyProof(verification, ret)
         })
     }
 
