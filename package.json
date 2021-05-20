@@ -5,7 +5,7 @@
   "main": "src/main.ts",
   "scripts": {
     "start": "ts-node src/main.ts",
-    "test": "jest",
+    "test": "jest src",
     "build": "tsc",
     "submit-sector": "ts-node src/tools/SubmitSector.ts"
   },
